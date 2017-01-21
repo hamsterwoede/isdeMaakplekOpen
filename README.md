@@ -5,7 +5,7 @@ Je hebt een chinese kloon van een "wemos d1 mini".
 Daar zit een esp8266 chip en een brein op.                        
 Communicatie met je computer gaat via een CH340G chip.
 Daar moet je even de driver voor installeren op je Mac.                        
-[15:56, 1/21/2017] Herman Kopinga: Dan gebruik je (of installeer je) de Arduino IDE van Arduino.cc                        
+Dan gebruik je (of installeer je) de Arduino IDE van Arduino.cc                        
 Bij de settings van Arduino stel je "http://arduino.esp8266.com/stable/package_esp8266com_index.json" in als "Additional board managers URL"                        
 Dan bij Tools -> Boards -> Board Manager                        
 esp8266 installeren.                        
