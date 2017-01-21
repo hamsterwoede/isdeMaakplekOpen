@@ -14,6 +14,7 @@
 ESP8266WiFiMulti WiFiMulti;
 
 #define sensorPin A0
+#define ledOUTPUTPin 2
 int sensorValue = 0;  
 int percent = 0;
 
@@ -33,8 +34,8 @@ void setup() {
     }
 
     WiFiMulti.addAP("Maakplek", "ikbennietdeslimste@maakplek.nl");
-    WiFiMulti.addAP("Lief delen, niet stelen.", "gewoondoen");
-    pinMode(2, OUTPUT);
+    WiFiMulti.addAP("thuisWIFI", "thuisWachtWoord");
+    pinMode(ledOUTPUTPin, OUTPUT);
 }
 
 void loop() {
@@ -60,12 +61,19 @@ void loop() {
             // file found at server
             if(httpCode == HTTP_CODE_OK) {
                 String payload = http.getString();
+                // De pagina maakplek.nl/open bevat 1 karakter, spatie of enter.
+                // Als spatie is de Maakplek open:
                 if (payload == " ") {
+                  // Via de seriele debugpoort delen.
                   USE_SERIAL.printf("open");
-                  digitalWrite(2, 1);
+                  // De LED aanzetten :)
+                  digitalWrite(ledOUTPUTPin, 1);
                 } else {
+                  // In alle andere gevallen is de Maakplek dicht.
+                  // Via de seriele debugpoort delen.
                   USE_SERIAL.printf("closed");
-                  digitalWrite(2, 0);
+                  // De LED dan maar weer uitzetten.
+                  digitalWrite(ledOUTPUTPin, 0);
                 }
                 USE_SERIAL.println(payload);
             }
@@ -75,26 +83,6 @@ void loop() {
 
         http.end();
     }
-    percent = readPlant();
-
+    // 10 seconden wachten...
     delay(10000);
 }
-
-int readPlant()
-{
-  int percentValue = 0;
-  percentValue = map(analogRead(sensorPin), 1023, 465, 0, 100);
-  printValuesToSerial();
-  return percentValue;
-}
-
-void printValuesToSerial()
-{
-  Serial.print("\n\nAnalog Value: ");
-  Serial.print(sensorValue);
-  Serial.print("\nPercent: ");
-  Serial.print(percent);
-  Serial.println("%");
-}
-
-
