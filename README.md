@@ -14,4 +14,4 @@ Let op 2: de installatie van de driver vereist herstarten, ook bij OSX.
 
 Dan code van https://github.com/HermanKopinga/isdeMaakplekOpen gebruiken
 In Arduino: Tools -> Boards -> "WeMos D1 R2 & mini" kiezen
-
+Dan 'de juiste' compoort selecteren bij Tools -> Port
